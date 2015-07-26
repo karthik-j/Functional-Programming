@@ -1,0 +1,15 @@
+datatype 'a gametree = node of 'a * 'a gametree list;
+
+fun pmap(f,n,[])    =  []
+	| pmap(f,n,(h::t))  =  f(n,h) ::  (pmap(f,n,t));
+
+
+fun prune(1,node(p,glist)) = node(p,[])
+    | prune(n,node(p,glist)) =node(p,pmap(prune,n-1,glist));
+	
+	
+fun tmap(f,s,[]) = [] 
+	| tmap(f,s,head::tail) = f(s,head) :: tmap(f,s,tail);
+
+
+fun treemap(s, node(p, glist)) = node(s(p),tmap(treemap,s,glist));
